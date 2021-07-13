@@ -1,0 +1,42 @@
+
+
+syntax = "proto2";
+
+import "iv_slam_mapping/mapping_3d/proto/range_data_inserter_options.proto";
+
+package iv_slam_mapping.mapping_3d.proto;
+
+message SubmapsOptions {
+  // Resolution of the 'high_resolution' map in meters used for local SLAM and
+  // loop closure.
+  optional double high_resolution = 1;
+
+  // Maximum range to filter the point cloud to before insertion into the
+  // 'high_resolution' map.
+  optional double high_resolution_max_range = 25;//origin 4
+
+  // Resolution of the 'low_resolution' version of the map in meters used for
+  // local SLAM only.
+  optional double low_resolution = 5;
+
+  // Number of scans before adding a new submap. Each submap will get twice the
+  // number of scans inserted: First for initialization without being matched
+  // against, then while being matched.
+  optional int32 num_range_data = 2;
+
+  optional RangeDataInserterOptions range_data_inserter_options = 3;
+  
+  optional bool twid_submap_write = 6;
+  optional bool trid_submap_write = 7;
+  optional bool twid_submap_display = 8;
+  optional bool trid_submap_display = 9;
+  optional bool enable_traversablearea_extraction = 10;
+  optional bool visualization_trid_submap_write =11;
+  optional double kxrayobstructedcellprobabilitylimit =12;
+optional int32 rough_intensity =13;
+optional double kminzdifference =14;
+optional double kminzdifference_beyond =15;
+optional double zdifference_change_thresh =16;
+optional double obstacle_emptythresh =17;
+optional int32 extension_index =18;
+}

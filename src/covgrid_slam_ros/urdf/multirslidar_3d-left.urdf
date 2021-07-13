@@ -1,0 +1,88 @@
+<!--
+-->
+
+<robot name="iv_velodyne_3d">
+  <material name="orange">
+    <color rgba="1.0 0.5 0.2 1" />
+  </material>
+  <material name="gray">
+    <color rgba="0.2 0.2 0.2 1" />
+  </material>
+
+  <link name="imu_frame">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" />
+      <geometry>
+        <box size="0.06 0.04 0.02" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+  </link>
+
+  <link name="hdl64_frame">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" />
+      <geometry>
+        <cylinder length="0.07" radius="0.05" />
+      </geometry>
+      <material name="gray" />
+    </visual>
+  </link>
+  <link name="velodyne">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" />
+      <geometry>
+        <cylinder length="0.07" radius="0.05" />
+      </geometry>
+      <material name="gray" />
+    </visual>
+  </link>
+  <link name="lidar">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" />
+      <geometry>
+        <cylinder length="0.07" radius="0.05" />
+      </geometry>
+      <material name="gray" />
+    </visual>
+  </link>
+
+  <link name="vehicle_lidar_odometry_frame">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" />
+      <geometry>
+        <cylinder length="0.07" radius="0.05" />
+      </geometry>
+      <material name="gray" />
+    </visual>
+  </link>
+
+  <link name="vehicle_frame" />
+
+  <joint name="imu_link_joint" type="fixed">
+    <parent link="vehicle_frame" />
+    <child link="imu_frame" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <joint name="hdl64_link_joint" type="fixed">
+    <parent link="vehicle_frame" />
+    <child link="hdl64_frame" />
+    <origin xyz="0 0 0" rpy="0.0 0.0 0" />  </joint>
+
+  <joint name="velodyne_link_joint" type="fixed">
+    <parent link="vehicle_frame" />
+    <child link="velodyne" />
+    <origin xyz="-0.051980358648 1.02899826922 1.7963234505" rpy="-0.004524 -0.024346  1.598268" />  </joint>
+
+    
+  <joint name="rslidar_link_joint" type="fixed">
+    <parent link="vehicle_frame" />
+    <child link="lidar" />
+    <origin xyz="0 0 0" rpy="-0.0003 -0.0138998 1.52287549" />  </joint>
+    
+  <joint name="odom_joint" type="fixed">
+    <parent link="vehicle_lidar_odometry_frame" />
+    <child link="vehicle_frame" />
+    <origin xyz="0 0 0" rpy="0.0 0.0 0" />  </joint>
+</robot>

@@ -1,0 +1,15 @@
+<launch>
+<node
+pkg="sensor_fusion"
+type="lidar_filter"
+name="node_lidar_filter"
+output="screen"
+>
+<param name="wheelbase_x" value="0.50"/>
+<param name="wheelbase_y" value="1.32"/>
+<param name="disLimit" value="6"/>
+<param name="timeLimit" value="20"/>
+<param name="withOctans" value="false"/>
+
+</node>
+</launch>

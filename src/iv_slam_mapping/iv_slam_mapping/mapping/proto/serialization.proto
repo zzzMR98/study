@@ -1,0 +1,33 @@
+
+syntax = "proto2";
+
+package iv_slam_mapping.mapping.proto;
+
+import "iv_slam_mapping/mapping/proto/submap.proto";
+import "iv_slam_mapping/sensor/proto/sensor.proto";
+
+message SubmapId {
+  optional int32 trajectory_id = 1;
+  optional int32 submap_index = 2;  // Submap index in the given trajectory.
+}
+
+message NodeId {
+  optional int32 trajectory_id = 1;
+  optional int32 node_index = 2;  // Node index in the given trajectory.
+}
+
+message Submap {
+  optional SubmapId submap_id = 1;
+  optional Submap3D submap_3d = 3;
+}
+
+message RangeData {
+  optional NodeId node_id = 1;
+  optional sensor.proto.CompressedRangeData range_data = 4;
+}
+
+message SerializedData {
+  optional Submap submap = 1;
+  optional RangeData range_data = 2;
+  // TODO(whess): Add IMU data, odometry.
+}

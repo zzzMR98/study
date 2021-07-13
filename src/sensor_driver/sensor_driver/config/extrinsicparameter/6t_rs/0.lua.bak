@@ -1,0 +1,15 @@
+
+options={
+  ip = "192.168.3.201",
+  port = 9901,
+  lasernum = 32,
+  x_angle =  -0.866996,
+  y_angle = 0.803254,
+  z_angle = -0.006078,
+  x_offset = 0,
+  y_offset = 2.54,
+  z_offset = 1.734120,
+  calibration_file = "rslidarconfig/6t/rs_lidar_32",
+  model = "rslidar",
+}
+return options

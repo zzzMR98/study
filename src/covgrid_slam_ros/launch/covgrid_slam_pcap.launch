@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <param name="robot_description"
+    textfile="$(find sensor_driver)/urdf/multivelodyne_3d.urdf" />
+
+  <param name="publish_frequency" value="50." />
+    
+  <node name="robot_state_publisher" pkg="robot_state_publisher"
+    type="robot_state_publisher" />
+
+  <arg name="rviz" default="false" />
+  <arg name = "run_slam_mapping" default = "true"/> 
+  <arg name = "run_back_lidar" default = "false"/> 
+
+  <arg name="configfile" default="$(find sensor_driver)/config/configmulti.xml" />
+  <arg name="logdir" default="--log_dir=/home/jkj/catkin_workspace/log" />
+  <arg name="glogparam" default="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=5   $(arg logdir)" />
+
+  <node pkg="sensor_driver" type="masternode" name="masternode" args="$(arg glogparam)" output="screen">
+  	<param name="config_file" value="$(arg configfile)"/>
+  </node>
+
+
+  <node pkg="covgrid_slam_ros" type="lidarodometrymain" name="lidarodometrymain" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=2   $(arg logdir)" output="screen">
+  <param name="configuration_directory" value="$(find covgrid_slam_ros)/config" />
+  <param name="configuration_basename" value="localmap.lua" />
+  <param name="withgps" value="true"/>
+  <param name="withinsvelocity" value="true"/>
+  <param name="withecu" value="false"/>
+  <param name="sendflag" value="false"/>
+  <param name="local_ip" value="192.168.0.112"/>
+  <param name="local_port" value="9911"/>
+  <param name="remote_ip" value="192.168.0.111"/>
+  <param name="remote_port" value="9912"/>
+  </node>
+  
+  
+  <node pkg="covgrid_slam_ros" type="transformmain" name="transformmain" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=2   $(arg logdir)" output="screen">
+  <param name="heightdiff_threshold" value="0.3"/>
+  </node>
+
+
+  <node pkg="sensor_driver" type="getmultivelodynedata" name="getmultivelodynedata" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=2   $(arg logdir)" output="screen">
+  </node>
+
+  <node pkg="obstacle_detection" type="obstacle_detection_node" name="obstacle_detection_node" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=0   $(arg logdir)" output="screen">
+  <param name="heightdiff_threshold" value="0.3"/>
+  <param name="heightdiff_threshold_higher" value="0.5"/>
+  <param name="N_SCANS" value="64"/>
+  <param name="display_on" value="true"/>
+  </node>
+
+
+  <group if="$(arg run_back_lidar)">
+
+  <node pkg="sensor_driver" type="getbackvelodynedata" name="getbackvelodynedata" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=2   $(arg logdir)" output="screen">
+  <param name="fix_frame" value="true"/>
+  </node>
+  <node pkg="obstacle_detection" type="back_obstacle_node" name="back_obstacle_node" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=0   $(arg logdir)" output="screen">
+  <param name="heightdiff_threshold" value="0.3"/>
+  <param name="display_on" value="true"/>
+  </node>
+ </group>
+ <group if="$(arg run_slam_mapping)">
+  <node name="iv_slam_mapping_node" pkg="iv_slam_mapping_ros"
+      type="iv_slam_mapping_node" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=2 $(arg logdir) 
+          -slam_configuration_directory $(find iv_slam_mapping_ros)/slam_configuration_files
+          -slam_configuration_basename rciv_slam_fused.lua"          
+      output="screen">
+    <remap from="points2" to="lidar_cloud_calibrated" />
+    <!--remap from="points2_2" to="vertical_laser_3d" /-->
+    <remap from="imu" to="imudata" />
+  </node>
+  <node name="traversibal_area_extraction_main" pkg="traversable_area_extraction"
+      type="traversable_area_extraction_main" args="
+          -traversable_area_extraction_configuration_directory $(find traversable_area_extraction)/cofiguration_file
+          -traversable_area_extraction_configuration_basename traversable_area_extraction_config.lua
+--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=0
+  $(arg logdir)"          
+      output="screen" >    
+  </node>
+  
+ </group>
+ <group if="0">
+  <node pkg="dynamicobject" type="dynamicobject" name="dynamicobject" args="--logtostderr=1  --colorlogtostderr=0 --stderrthreshold=0   $(arg logdir)" output="screen">
+  </node>
+ </group>
+
+  <group if="$(arg rviz)">
+    <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find covgrid_slam_ros)/rviz_cfg/covgrid_mapping.rviz" />
+  </group>
+
+</launch>

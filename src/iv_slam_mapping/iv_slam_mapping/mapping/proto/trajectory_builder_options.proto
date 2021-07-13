@@ -1,0 +1,14 @@
+
+
+syntax = "proto2";
+
+
+import "iv_slam_mapping/mapping_3d/proto/local_trajectory_builder_options.proto";
+
+package iv_slam_mapping.mapping.proto;
+
+message TrajectoryBuilderOptions {
+  optional mapping_3d.proto.LocalTrajectoryBuilderOptions
+      trajectory_builder_3d_options = 2;
+  optional bool pure_localization = 3;
+}

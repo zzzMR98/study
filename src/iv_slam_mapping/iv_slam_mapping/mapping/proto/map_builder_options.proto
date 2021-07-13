@@ -1,0 +1,9 @@
+
+
+syntax = "proto2";
+
+package iv_slam_mapping.mapping.proto;
+
+message MapBuilderOptions {
+  optional bool use_trajectory_builder_3d = 2;
+}

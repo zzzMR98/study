@@ -1,0 +1,27 @@
+
+syntax = "proto2";
+
+package iv_slam_mapping.mapping.proto;
+
+import "ivcommon/transform/proto/transform.proto";
+
+option java_outer_classname = "TrajectoryOuterClass";
+
+message Trajectory {
+  // NEXT_ID: 7
+  message Node {
+    optional int64 timestamp = 1;
+    // Transform from tracking to map frame.
+    optional ivcommon.transform.proto.Rigid3d pose = 5;
+  }
+
+  message Submap {
+    optional ivcommon.transform.proto.Rigid3d pose = 1;
+  }
+
+  // Time-ordered sequence of Nodes.
+  repeated Node node = 1;
+
+  // Submaps associated with the trajectory.
+  repeated Submap submap = 2;
+}

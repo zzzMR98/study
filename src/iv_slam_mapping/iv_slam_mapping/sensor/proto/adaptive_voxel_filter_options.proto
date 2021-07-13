@@ -1,0 +1,16 @@
+
+syntax = "proto2";
+
+package iv_slam_mapping.sensor.proto;
+
+message AdaptiveVoxelFilterOptions {
+  // 'max_length' of a voxel edge.
+  optional float max_length = 1;
+
+  // If there are more points and not at least 'min_num_points' remain, the
+  // voxel length is reduced trying to get this minimum number of points.
+  optional float min_num_points = 2;
+
+  // Points further away from the origin are removed.
+  optional float max_range = 3;
+}

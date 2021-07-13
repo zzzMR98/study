@@ -1,0 +1,18 @@
+
+syntax = "proto2";
+
+package iv_slam_mapping.mapping_3d.proto;
+
+import "iv_slam_mapping/mapping_3d/proto/hybrid_grid.proto";
+import "ivcommon/transform/proto/transform.proto";
+
+// Serialized state of a mapping_3d::Submap.
+message Submap3D {
+  optional ivcommon.transform.proto.Rigid3d local_pose = 1;
+  optional int32 num_range_data = 2;
+  optional bool finished = 3;
+  optional mapping_3d.proto.HybridGrid high_resolution_hybrid_grid = 4;
+  optional mapping_3d.proto.HybridGrid low_resolution_hybrid_grid = 5;
+   optional int32 trajectory_index = 6;
+   optional int32 submap_index = 7;
+}

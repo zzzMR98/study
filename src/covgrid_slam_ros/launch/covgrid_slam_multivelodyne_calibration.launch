@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <arg name="rviz" default="true" />
+  
+  
+  <arg name="configfile" default="$(find sensor_driver)/config/configcalibration.xml" />
+  <arg name="logdir" default="--log_dir=/home/jkj/catkin_ws/log" />
+  <arg name="glogparam" default="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=5   $(arg logdir)" />
+
+  <node pkg="sensor_driver" type="masternode" name="masternode" args="$(arg glogparam)" output="screen">
+  	<param name="config_file" value="$(arg configfile)"/>
+  </node>
+
+
+
+  
+  <node pkg="sensor_driver" type="getmultivelodynedata" name="getmultivelodynedata" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=5   $(arg logdir)" output="screen">
+  <param name="fix_frame" value="true"/>
+  </node>
+
+  <node pkg="sensor_driver" type="getinsdata" name="getinsdata" args="$(arg glogparam)" output="screen">
+  </node>
+  
+  <group if="$(arg rviz)">
+    <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find covgrid_slam_ros)/rviz_cfg/calibration.rviz" />
+  </group>
+
+</launch>

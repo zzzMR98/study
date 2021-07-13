@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+package mapping3d.proto;
+
+
+message InitMatchOptions {
+  // Threshold for the scan match score below which a match is not considered.
+  // Low scores indicate that the scan and map do not look similar.
+  optional double min_score = 1;
+
+  // Threshold for the score of the low resolution grid below which a match is
+  // not considered. Only used for 3D.
+  optional double min_low_resolution_score = 2;
+}

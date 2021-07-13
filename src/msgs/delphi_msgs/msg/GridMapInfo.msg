@@ -1,0 +1,9 @@
+Header header
+int32 ogmwidth
+int32 ogmheight
+int32 map_pose_index_x
+int32 map_pose_index_y
+float64 ogmresolution
+geometry_msgs/Pose map_pose
+int16[] data
+bool submap_finished_flag

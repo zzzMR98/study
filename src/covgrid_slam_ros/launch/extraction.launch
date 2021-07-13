@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <param name="robot_description"
+    textfile="$(find sensor_driver)/urdf/multivelodyne_3d.urdf" />
+
+  <param name="publish_frequency" value="50." />
+    
+  <node name="robot_state_publisher" pkg="robot_state_publisher"
+    type="robot_state_publisher" />
+
+  <arg name="rviz" default="true" />
+  <arg name = "run_slam_mapping" default = "true"/> 
+  <arg name = "run_back_lidar" default = "false"/> 
+
+  <arg name="configfile" default="$(find sensor_driver)/config/configmulti.xml" />
+  <arg name="logdir" default="--log_dir=/home/jkj/catkin_workspace/log" />
+  <arg name="glogparam" default="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=5   $(arg logdir)" />
+
+
+
+ <group if="$(arg run_slam_mapping)">
+
+  <node name="traversibal_area_extraction_main" pkg="traversable_area_extraction"
+      type="traversable_area_extraction_main" args="
+          -traversable_area_extraction_configuration_directory $(find traversable_area_extraction)/cofiguration_file
+          -traversable_area_extraction_configuration_basename traversable_area_extraction_config.lua
+--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=0
+  $(arg logdir)"          
+      output="screen" >    
+  </node>
+  
+  <node pkg="traversable_area_optimization" type="traversable_area_optimization_main" name="traversable_area_optimization_main" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=2   $(arg logdir)" output="screen">
+  <remap from="traversable_area_topic" to="final_traversable_area_topic" />
+  <param name="vehicle_width" value="2.2"/>
+  <param name="known_radius_" value="30"/>
+  </node>
+ </group>
+
+
+
+</launch>

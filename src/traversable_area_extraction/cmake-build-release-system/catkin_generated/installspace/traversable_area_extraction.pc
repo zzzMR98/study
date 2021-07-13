@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: traversable_area_extraction
+Description: Description of traversable_area_extraction
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: geometry_msgs sensor_msgs roscpp roslib std_msgs iv_slam_ros_msgs covgrid_slam_msgs obstacle_msgs slopeogm_msgs stiff_msgs uneven_area_msgs eigen_conversions message_runtime message_filters

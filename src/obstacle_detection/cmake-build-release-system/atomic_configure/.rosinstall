@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/zzz/ivrc/ivrc_lidar/smog_traversable_extraction/src/obstacle_detection/cmake-build-release-system/devel/setup.sh

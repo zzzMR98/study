@@ -1,0 +1,16 @@
+
+@PACKAGE_INIT@
+
+set_and_check(IV_SLAM_MAPPING_CMAKE_DIR "@PACKAGE_IV_SLAM_MAPPING_CMAKE_DIR@")
+
+set(CERES_DIR_HINTS @Ceres_DIR@)
+
+if (iv_slam_mapping_FIND_QUIETLY)
+   find_package(Ceres QUIET HINTS ${CERES_DIR_HINTS})
+elseif (iv_slam_mapping_FIND_REQUIRED)
+   find_package(Ceres REQUIRED HINTS ${CERES_DIR_HINTS})
+else ()
+   find_package(Ceres HINTS ${CERES_DIR_HINTS})
+endif()
+
+include("${IV_SLAM_MAPPING_CMAKE_DIR}/Iv_slam_mappingTargets.cmake")

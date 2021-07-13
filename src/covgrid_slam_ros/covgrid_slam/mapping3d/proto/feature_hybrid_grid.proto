@@ -1,0 +1,33 @@
+
+syntax = "proto2";
+
+package mapping3d.proto;
+
+
+
+message FeatureElement {
+  optional int32 probability = 1;
+  optional int32 pointvarieties = 2;
+  optional int32 pointnum = 3;
+  optional float sum_x = 4;
+  optional float sum_y = 5;
+  optional float sum_z = 6;
+  optional float sum_x_x = 7;
+  optional float sum_y_y = 8;
+  optional float sum_z_z = 9;
+  optional float sum_x_y = 10;
+  optional float sum_x_z = 11;
+  optional float sum_y_z = 12;
+}
+
+message FeatureHybridGrid {
+  optional float resolution = 1;
+  optional int32 confirmed_voxel_number = 2;
+  // '{x, y, z}_indices[i]' is the index of 'values[i]'.
+  repeated sint32 x_indices = 3 [packed = true];
+  repeated sint32 y_indices = 4 [packed = true];
+  repeated sint32 z_indices = 5 [packed = true];
+  // The entries in 'values' should be uint16s, not int32s, but protos don't
+  // have a uint16 type.
+  repeated FeatureElement values = 6;
+}

@@ -1,0 +1,29 @@
+
+syntax = "proto2";
+
+package mapping3d.proto;
+
+import "covgrid_slam/mapping3d/proto/hybrid_grid.proto";
+import "covgrid_slam/mapping3d/proto/feature_hybrid_grid.proto";
+import "covgrid_slam/mapping3d/proto/intensity_hybrid_grid.proto";
+import "ivcommon/transform/proto/transform.proto";
+
+
+// Serialized state of a mapping_3d::Submap.
+message Submap3D {
+  optional ivcommon.transform.proto.Rigid3d local_pose = 1;
+  optional ivcommon.transform.proto.Rigid3d local_pose_adjusted = 11;
+  optional ivcommon.transform.proto.Rigid3d global_pose_adjusted = 12;
+  optional int32 num_range_data = 2;
+  optional bool finished = 3;
+  optional mapping3d.proto.HybridGrid high_resolution_hybrid_grid = 4;
+  optional mapping3d.proto.HybridGrid low_resolution_hybrid_grid = 5;
+  optional mapping3d.proto.FeatureHybridGrid feature_hybrid_grid = 8;
+  optional mapping3d.proto.FeatureHybridGrid low_intensity_feature_hybrid_grid = 14;
+  optional mapping3d.proto.FeatureHybridGrid high_intensity_feature_hybrid_grid = 15;
+  optional mapping3d.proto.IntensityHybridGrid intensity_hybrid_grid = 13;
+  repeated float histogram = 9 [packed = true];
+  repeated ivcommon.transform.proto.Rigid3d trajectory = 10;
+  optional int32 trajectory_index = 6;
+  optional int32 submap_index = 7;
+}

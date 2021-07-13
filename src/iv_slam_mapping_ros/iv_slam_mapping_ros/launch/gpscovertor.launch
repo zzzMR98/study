@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>  
+  <arg name="configfile" default="$(find sensor_driver)/config/gpsconvertor.xml" />
+  <arg name="logdir" default="--log_dir=/home/zack-liu/catkin_test/log" />
+  <arg name="glogparam" default="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=5   $(arg logdir)" />
+
+  <node pkg="sensor_driver" type="masternode" name="masternode" args="$(arg glogparam)" output="screen">
+  	<param name="config_file" value="$(arg configfile)"/>
+  </node>
+
+  <node pkg="sensor_driver" type="gpsconvertor" name="gpsconvertor"  output="screen">
+  </node>  
+  
+
+</launch>

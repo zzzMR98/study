@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package  format="2">
+  <name>sensor_driver</name>
+  <version>3.2.20190611</version>
+
+  <description>
+	This is a ROS implementation of COVGRID_SLAM by bit RCIV
+  </description>
+
+  <maintainer email="jikaijin94@gmail.com">Jerry JI</maintainer>
+
+  <license>BSD</license>
+
+  <author email="jikaijin94@gmail.com">Jerry JI</author>
+  
+   <buildtool_depend>catkin</buildtool_depend>
+
+
+  <depend>ivcommon</depend>
+  <depend>sensor_driver_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>message_runtime</depend>
+  <depend>nav_msgs</depend>
+  <depend>rosbag</depend>
+  <depend>roscpp</depend>
+  <depend>roslib</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>tf</depend>
+  <depend>tf2</depend>
+  <depend>tf2_eigen</depend>
+  <depend>tf2_ros</depend>
+  <depend>serial</depend>
+
+
+  <export>
+  </export>
+</package>

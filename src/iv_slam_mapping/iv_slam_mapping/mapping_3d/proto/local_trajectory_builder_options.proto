@@ -1,0 +1,44 @@
+
+syntax = "proto2";
+
+package iv_slam_mapping.mapping_3d.proto;
+
+
+//import "iv_slam_mapping/sensor/proto/adaptive_voxel_filter_options.proto";
+
+import "iv_slam_mapping/mapping_3d/proto/submaps_options.proto";
+
+// NEXT ID: 17
+message LocalTrajectoryBuilderOptions {
+  // Rangefinder points outside these ranges will be dropped.
+  optional float min_range = 1;
+  optional float max_range = 30;//2 origin
+  // Voxel filter that gets applied to the range data immediately after
+  // cropping.
+  optional float voxel_filter_size = 4;
+
+  // Voxel filter used to compute a sparser point cloud for matching.
+//   optional sensor.proto.AdaptiveVoxelFilterOptions
+//       high_resolution_adaptive_voxel_filter_options = 5;
+//   optional sensor.proto.AdaptiveVoxelFilterOptions
+//       low_resolution_adaptive_voxel_filter_options = 12;
+
+  // Whether to solve the online scan matching first using the correlative scan
+  // matcher to generate a good starting point for Ceres.
+  optional bool use_online_correlative_scan_matching = 13;
+
+  // Time constant in seconds for the orientation moving average based on
+  // observed gravity via the IMU. It should be chosen so that the error
+  // 1. from acceleration measurements not due to gravity (which gets worse when
+  // the constant is reduced) and
+  // 2. from integration of angular velocities (which gets worse when the
+  // constant is increased) is balanced.
+  optional double imu_gravity_time_constant = 15;
+    optional bool range_data_write =16;
+    optional bool offline_map_invoke =18;
+    optional string offline_map_file_name_time = 19;
+   optional bool serve_global_optimization =17;
+   optional bool use_location_module =20;
+
+  optional SubmapsOptions submaps_options = 8;
+}

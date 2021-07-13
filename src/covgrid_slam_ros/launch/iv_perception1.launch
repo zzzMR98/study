@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <param name="robot_description"
+    textfile="$(find sensor_driver)/urdf/multivelodyne_3d.urdf" />
+    
+  <node name="robot_state_publisher" pkg="robot_state_publisher"
+    type="robot_state_publisher" />
+    
+    
+  <arg name="rviz" default="true" />
+  
+
+  
+  <arg name="configfile" default="$(find sensor_driver)/config/config-toyota.xml" />
+  <arg name="logdir" default="--log_dir=/home/bit/catkin_ivperception1/log" />
+  <arg name="glogparam" default="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=5   $(arg logdir)" />
+
+  <node pkg="sensor_driver" type="masternode" name="masternode" args="$(arg glogparam)" output="screen">
+  	<param name="config_file" value="$(arg configfile)"/>
+  </node>
+  <group if="1">
+  
+	  <node pkg="covgrid_slam_ros" type="lidarodometrymain" name="lidarodometrymain" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=0   $(arg logdir)" output="screen">
+	  <param name="configuration_directory" value="$(find covgrid_slam_ros)/config" />
+	  <param name="configuration_basename" value="localmap.lua" />
+	  <param name="withoutimu" value="true"/>
+	  <param name="withgps" value="true"/>
+	  <param name="insvelocity" value="true"/>
+	  <param name="withecu" value="false"/>
+	  <param name="sendflag" value="false"/>
+	  <param name="local_ip" value="192.168.0.112"/>
+	  <param name="local_port" value="9911"/>
+	  <param name="remote_ip" value="192.168.0.111"/>
+	  <param name="remote_port" value="9912"/>
+	  </node>
+
+	  <node pkg="covgrid_slam_ros" type="preciseodometrymain" name="preciseodometrymain" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=2   $(arg logdir)" output="screen">
+	  <param name="configuration_directory" value="$(find covgrid_slam_ros)/config" />
+	  <param name="configuration_basename" value="localmap.lua" />
+	  <param name="withgps" value="true"/>
+	  <param name="withinsvelocity" value="true"/>
+	  <param name="withecu" value="false"/>
+	  </node>
+  
+	  <node pkg="covgrid_slam_ros" type="transformmain" name="transformmain" args="$(arg glogparam)" output="screen">
+	  <param name="heightdiff_threshold" value="0.3"/>
+	  </node>
+
+	<node pkg="sensor_fusion" type="sensor_fusion" name="node_sensor_fusion" />
+
+	<node pkg="sensor_fusion" type="lidar_filter" name="node_lidar_filter" >
+	<param name="wheelbase" value="1.3"/>
+	</node>
+</group>
+
+<group if="1">
+  <node pkg="depth_image_utils" type="depth_image_utils" name="depth_image_utils" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=2   $(arg logdir)" output="screen">
+  </node>
+  
+
+  <node pkg="flat_road" type="flat_roadnode" name="flat_roadnode" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=2   $(arg logdir)" output="screen">
+  </node>
+  
+
+  <node pkg="slopeogm" type="slopenode" name="slopenode" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=2   $(arg logdir)" output="screen">
+  </node>
+
+  <node pkg="stiff_depth" type="stiff_depth" name="stiff_depth" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=2   $(arg logdir)" output="screen">
+  </node>
+  
+
+  <node pkg="negative_detection" type="negativenode" name="negativenode" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=2   $(arg logdir)" output="screen">
+    <param name="heightdiff_threshold" value="0.3"/>
+  	<param name="N_SCANS" value="32"/>
+  </node>
+ </group>
+  <node pkg="sensor_driver" type="getmultivelodynedata" name="getmultivelodynedata" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=2   $(arg logdir)" output="screen">
+  </node>
+
+  <node pkg="sensor_driver" type="getinsdata" name="getinsdata" args="$(arg glogparam)" output="screen">
+  </node>
+
+  <node pkg="sensor_driver" type="getgpsdata" name="getgpsdata" args="$(arg glogparam)" output="screen">
+  <remap from="gpsdata" to="GPSmsg" />
+  </node>
+  
+  <node pkg="sensor_driver" type="getecudata" name="getecudata" args="$(arg glogparam)" output="screen">
+  </node>
+  
+  <group if="$(arg rviz)">
+    <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find covgrid_slam_ros)/rviz_cfg/covgrid_mapping.rviz" />
+  </group>
+
+</launch>

@@ -1,0 +1,34 @@
+
+syntax = "proto2";
+
+package iv_slam_mapping.sensor.proto;
+
+option java_outer_classname = "Sensor";
+
+import "ivcommon/transform/proto/transform.proto";
+
+// Compressed collection of a 3D point cloud.
+message CompressedPointCloud {
+  optional int32 num_points = 1;
+  repeated int32 point_data = 3 [packed = true];
+}
+
+// Proto representation of ::iv_slam_mapping::sensor::ImuData.
+message ImuData {
+  optional int64 timestamp = 1;
+  optional ivcommon.transform.proto.Vector3d linear_acceleration = 2;
+  optional ivcommon.transform.proto.Vector3d angular_velocity = 3;
+}
+
+// Proto representation of ::iv_slam_mapping::sensor::CompressedRangeData.
+message CompressedRangeData {
+  optional ivcommon.transform.proto.Vector3f origin = 1;
+  optional CompressedPointCloud returns = 2;
+  optional CompressedPointCloud misses = 3;
+}
+
+// Proto representation of ::iv_slam_mapping::sensor::OdometryData.
+message OdometryData {
+  optional int64 timestamp = 1;
+  optional ivcommon.transform.proto.Rigid3d pose = 2;
+}

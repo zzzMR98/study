@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <param name="robot_description"
+    textfile="$(find sensor_driver)/urdf/multivelodyne_3d.urdf" />
+    
+  <node name="robot_state_publisher" pkg="robot_state_publisher"
+    type="robot_state_publisher" />
+    
+  <arg name="rviz" default="true" />
+
+
+  <arg name="configfile" default="$(find sensor_driver)/config/configmulti.xml" />
+  <arg name="logdir" default="--log_dir=/home/mdj/covgrid_slam-v1.2.1/log" />
+  <arg name="glogparam" default="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=5   $(arg logdir)" />
+
+  
+  <node pkg="frontal_mmw_radar" type="get_continental_radar_data" name="get_continental_radar_data" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=0   $(arg logdir)" output="screen">
+  </node>
+
+  <node pkg="frontal_mmw_radar" type="frontal_continental_radar" name="frontal_continental_radar" args="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=0   $(arg logdir)" output="screen">
+  </node>
+
+</launch>

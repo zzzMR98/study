@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>iv_slam_mapping_ros</name>
+  <version>3.1.20190610</version>
+  <description>
+    iv_slam_ros is a system that provides real-time simultaneous localization
+    and mapping (SLAM) in  3D across multiple platforms and sensor
+    configurations. This package provides iv_slam_mapping_ros's ROS integration.
+  </description>
+  <maintainer email="ZackLiu3714@gmail.com">
+    The IVRC Authors
+  </maintainer>
+  <license>Apache 2.0</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!--<build_depend>google-mock</build_depend>-->
+  <build_depend>g++-static</build_depend>
+  <build_depend>protobuf-dev</build_depend>
+  <build_depend>python-sphinx</build_depend>
+
+  <depend>sensor_driver_msgs</depend>
+  <depend>iv_slam_mapping</depend>
+  <depend>iv_slam_ros_msgs</depend>
+  <depend>covgrid_slam_msgs</depend>
+  <depend>iv_dynamicobject_msgs</depend>
+ 
+  <depend>eigen_conversions</depend>
+  <depend>geometry_msgs</depend>
+  <depend>libgflags-dev</depend>
+  <depend>libgoogle-glog-dev</depend>
+  <depend>libpcl-all-dev</depend>
+  <depend>message_runtime</depend>
+  <depend>nav_msgs</depend>
+  <depend>pcl_conversions</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>rosbag</depend>
+  <depend>roscpp</depend>
+  <depend>roslaunch</depend>
+  <depend>roslib</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_eigen</depend>
+  <depend>tf2_ros</depend>
+  <depend>urdf</depend>
+  <depend>visualization_msgs</depend>
+  <depend>tf</depend>
+  <depend>compressed_pointcloud_msgs</depend>
+  <depend>ivcommon</depend>
+
+  <test_depend>rosunit</test_depend>
+
+  <export>
+      <!--<rviz plugin="${prefix}/rviz_plugin_description.xml" />-->
+  </export>
+</package>

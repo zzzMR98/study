@@ -1,0 +1,18 @@
+
+syntax = "proto2";
+
+package iv_slam_mapping.mapping_3d.proto;
+
+message RangeDataInserterOptions {
+  // Probability change for a hit (this will be converted to odds and therefore
+  // must be greater than 0.5).
+  optional double hit_probability = 1;
+
+  // Probability change for a miss (this will be converted to odds and therefore
+  // must be less than 0.5).
+  optional double miss_probability = 2;
+
+  // Up to how many free space voxels are updated for scan matching.
+  // 0 disables free space.
+  optional int32 num_free_space_voxels = 3;
+}

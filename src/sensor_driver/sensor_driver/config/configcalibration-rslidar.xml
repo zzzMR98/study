@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <system>
+	<playback_path type="string">/home/jkj/catkin_ws/data/data/2017-11-29_10-43-01</playback_path>
+	<!--<playback_path type="string">/home/qiwang/workspace/record_data/2017-01-10_12-30-38</playback_path>-->
+	<record_path type="string">/home/jkj/catkin_ws/data/data</record_path>
+	<record_on type="bool">0</record_on>
+	<playback_on type="bool">0</playback_on>
+	<playback_start_at type="double">0</playback_start_at>
+	<!--reserved for the system, always 0-->
+	<system_start_time type="double">0</system_start_time>
+	<log_on type="bool">1</log_on>
+    <log_path type="string">/home/bit/catkin_ivperception1/logdata</log_path>
+	<GetINSData_on type="bool">1</GetINSData_on>
+	<GetGPSData_on type="bool">0</GetGPSData_on>
+    </system>
+
+    <iv_lidar>
+	<!--realtime=0, playback=1 !-->
+	<playback_on>0</playback_on>
+	<!--playback_mode>1(pcap) 2(pcd)</playback_mode!-->
+	<playback_mode>1</playback_mode>
+	<!--pcapfile>G:\\ivrc\\lidar\\tuolichezhe.pcap</pcapfile!-->
+	<pcapfile>/home/bit/data/1.pcap</pcapfile>
+	<!--true or false !-->
+	<record_on>1</record_on>
+	<timeout>0.1</timeout>
+	<show_window>1</show_window>
+	<flag_ogmdetection>0</flag_ogmdetection>
+	<flag_diffdetection>0</flag_diffdetection>
+	<flag_circletangential>0</flag_circletangential>
+	<flag_circleradius>0</flag_circleradius>
+	<rigid_heightdiffthreshold>0.3</rigid_heightdiffthreshold>
+	<lidarnum>1</lidarnum>
+	<calibdir>cw</calibdir>
+	<calibrationmode>1</calibrationmode>
+    </iv_lidar>
+    <iv_lidar_back>
+	<!--realtime=0, playback=1 !-->
+	<playback_on>1</playback_on>
+	<!--playback_mode>1(pcap) 2(pcd)</playback_mode!-->
+	<playback_mode>1</playback_mode>
+	<!--pcapfile>G:\\ivrc\\lidar\\tuolichezhe.pcap</pcapfile!-->
+	<pcapfile>/home/jkj/data/16.pcap</pcapfile>
+	<!--true or false !-->
+	<record_on>1</record_on>
+	<timeout>0.1</timeout>
+	<show_window>1</show_window>
+	<flag_ogmdetection>0</flag_ogmdetection>
+	<flag_diffdetection>0</flag_diffdetection>
+	<flag_circletangential>0</flag_circletangential>
+	<flag_circleradius>0</flag_circleradius>
+	<rigid_heightdiffthreshold>0.3</rigid_heightdiffthreshold>
+	<lasernum>16</lasernum>
+	<lidar_ip>192.168.3.203</lidar_ip>
+	<lidar_port>9903</lidar_port>
+	<alfa_r>0</alfa_r>
+	<beta_r>0</beta_r>
+	<gama_r>164</gama_r>
+	<x_offset_r>0</x_offset_r>
+	<y_offset_r>-1.7</y_offset_r>
+	<z_offset_r>0.5</z_offset_r>
+	<calibrationmode>0</calibrationmode>
+    </iv_lidar_back>
+    <GetGPSData>
+		<!--realtime=0, playback=1 !-->
+		<playback_on>1</playback_on>
+		<!--true or false !-->
+		<record_on>1</record_on>
+		<timeout>0.01</timeout>
+		<!--<port>9003</port>-->
+		<port>9003</port>
+		<pos_x>0</pos_x>
+		<pos_y>3.26</pos_y>
+		<pos_z>2.4</pos_z>
+		<yaw>1.7</yaw>
+		<pitch>0</pitch>
+		<roll>0</roll>
+    </GetGPSData>
+    <GetINSData>
+        <!--realtime=0, playback=1 !-->
+        <playback_on>1</playback_on>
+        <!--true or false !-->
+        <record_on>1</record_on>
+        <timeout>0.01</timeout>
+        <!--<port>9002</port>-->
+        <port>9001</port>
+    </GetINSData>
+</root>

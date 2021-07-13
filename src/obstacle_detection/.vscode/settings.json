@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "cmath": "cpp",
+        "*.ipp": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp"
+    },
+    "python.autoComplete.extraPaths": [
+        "/home/zzz/ivrc_lidar/data_analyse/devel/lib/python2.7/dist-packages",
+        "/opt/ros/kinetic/lib/python2.7/dist-packages"
+    ]
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name = "run_slam_optimization" default = "false"/>
+<arg name = "run_slam_mapping" default = "true"/> 
+<arg name = "run_traversable_area_extraction" default = "true"/> 
+<arg name = "run_dynamicobject_detection" default = "false"/> 
+ <arg name="run_lidar_odometry"  default="false" />
+  <arg name="run_getindnode"  default="false" />
+  <arg name = "gps_convert" default = "false"/>  
+  
+
+  <arg name="logdir" default="--log_dir=/home/bit/catkin_ivperception3/log" />
+  <arg name="glogparam" default="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=5   $(arg logdir)" />
+
+
+
+<group if="$(arg run_slam_mapping)">
+  <node name="iv_slam_mapping_node" pkg="iv_slam_mapping_ros"
+      type="iv_slam_mapping_node" args="
+          -slam_configuration_directory $(find iv_slam_mapping_ros)/slam_configuration_files
+          -slam_configuration_basename rciv_slam_fused.lua
+--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=0   $(arg logdir)"          
+      output="screen" >
+    <remap from="points2" to="lidar_cloud_calibrated" />
+    <!--remap from="points2_2" to="vertical_laser_3d compressed_pointcloud iv_perception2/lidar_cloud_calibrated" /-->
+    <remap from="imu" to="imudata" />
+  </node>
+</group>
+
+<group if="$(arg run_traversable_area_extraction)">
+  <node name="traversibal_area_extraction_main" pkg="traversable_area_extraction"
+      type="traversable_area_extraction_main" args="
+          -traversable_area_extraction_configuration_directory $(find traversable_area_extraction)/cofiguration_file
+          -traversable_area_extraction_configuration_basename traversable_area_extraction_config.lua
+--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=3
+  $(arg logdir)"          
+      output="screen" >    
+  </node>
+</group>
+
+
+<group if="$(arg run_dynamicobject_detection)">
+<node pkg="dynamicobject" type="dynamicobject" name="dynamicobject" args=" --logtostderr=0  --colorlogtostderr=1 --stderrthreshold=2  $(arg logdir)" >
+  <param name="heightdiff_threshold" value="0.3"/>
+<remap from="lidar_cloud_calibrated" to="iv_perception2/lidar_cloud_calibrated" />
+  </node>
+</group>
+  
+ 
+
+</launch>

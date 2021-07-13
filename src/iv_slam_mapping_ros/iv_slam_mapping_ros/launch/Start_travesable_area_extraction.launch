@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <arg name="logdir" default="--log_dir=/home/zack-liu/catkin_yuanshi/log" />
+  <arg name="glogparam" default="--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=5   $(arg logdir)" />
+
+
+  <node name="traversibal_area_extraction_main" pkg="traversable_area_extraction"
+      type="traversable_area_extraction_main" args="
+          -traversable_area_extraction_configuration_directory $(find traversable_area_extraction)/cofiguration_file
+          -traversable_area_extraction_configuration_basename traversable_area_extraction_config.lua
+--logtostderr=0  --colorlogtostderr=1 --stderrthreshold=0   $(arg logdir)"          
+      output="screen" >    
+  </node>
+<!--<node name="rviz" pkg="rviz" type="rviz" required="true"
+     args="-d $(find traversable_area_extraction)/cofiguration_file/traversable_area_extraction.rviz" />-->
+
+ <node pkg="ivrc_cross_communication" type="traversablearea_sub_test_main" name="traversablearea_sub_test_main"  output="screen"> 	
+  </node>
+  
+ 
+
+</launch>
